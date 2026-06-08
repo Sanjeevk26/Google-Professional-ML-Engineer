@@ -119,36 +119,83 @@ Important parameters:
 These settings control the balance between predictable and creative outputs.
 
 ---
+## Model Parameters with Examples
+
+Model parameters control how predictable, creative, or varied the model output will be.
+
+The three important parameters are:
+
+- Temperature
+- Top K
+- Top P
+
+---
 
 ## Temperature
 
-Temperature controls randomness in the output.
+Temperature controls the randomness or creativity of the model response.
 
 ### Low Temperature
 
-Use low temperature when the answer should be more predictable and factual.
+A low temperature makes the model more focused, predictable, and consistent.
 
 Best for:
 
-- Question answering
 - Summarization
+- Question answering
 - Business reports
+- Factual responses
 - Structured analysis
+
+Example prompt:
+
+```text
+Summarize this insurance risk report in 5 bullet points.
+```
+
+Expected output with low temperature:
+
+```text
+- The report identifies wildfire risk as the highest concern.
+- Flood risk is moderate in coastal areas.
+- Older properties have higher repair-cost exposure.
+- Preventive inspections can reduce claim risk.
+- The company should prioritize high-risk ZIP codes.
+```
+
+This type of output is direct, stable, and less creative.
+
+---
 
 ### High Temperature
 
-Use high temperature when the output should be more creative or varied.
+A high temperature makes the model more creative, varied, and less predictable.
 
 Best for:
 
-- Creative writing
 - Brainstorming
 - Marketing ideas
+- Creative writing
+- Campaign slogans
 - Story generation
 
-Simple meaning:
+Example prompt:
 
-> Lower temperature gives safer and more consistent answers. Higher temperature gives more creative and varied answers.
+```text
+Create 5 creative campaign taglines for a home insurance company.
+```
+
+Expected output with high temperature:
+
+```text
+- Protect Your Home Before the Storm Knows Your Name
+- Where Safety Meets Peace of Mind
+- Your Roof, Your Rules, Our Protection
+- Because Every Home Has a Story Worth Protecting
+- Insurance That Stands Guard While You Sleep
+```
+
+This type of output is more creative and varied.
 
 ---
 
@@ -156,37 +203,180 @@ Simple meaning:
 
 Top K limits the model to choosing from the top K most likely next words.
 
-Example:
+Simple meaning:
 
-If `Top K = 2`, the model chooses from the two most likely words.
+> Top K controls how many likely word options the model can choose from.
 
-This gives the model some variety while still keeping the output controlled.
+Example sentence:
+
+```text
+The garden was full of beautiful _____.
+```
+
+Assume the model predicts these next-word probabilities:
+
+| Word | Probability |
+|---|---|
+| flowers | 60% |
+| trees | 20% |
+| herbs | 10% |
+| insects | 5% |
+| books | 5% |
+
+---
+
+### Low Top K Example
+
+If `Top K = 1`, the model only chooses the most likely word.
+
+Output:
+
+```text
+The garden was full of beautiful flowers.
+```
+
+This is very predictable.
+
+---
+
+### Higher Top K Example
+
+If `Top K = 3`, the model can choose from the top 3 words:
+
+- flowers
+- trees
+- herbs
+
+Possible outputs:
+
+```text
+The garden was full of beautiful flowers.
+```
+
+```text
+The garden was full of beautiful trees.
+```
+
+```text
+The garden was full of beautiful herbs.
+```
+
+This gives more variety while still keeping the output relevant.
+
+---
+
+### Too High Top K Risk
+
+If Top K is too high, the model may include less suitable options.
+
+Possible weak output:
+
+```text
+The garden was full of beautiful books.
+```
+
+This may sound strange because `books` is not a natural fit for the sentence.
 
 ---
 
 ## Top P
 
-Top P selects from the smallest group of words whose combined probability reaches a set threshold.
-
-Example:
-
-If `Top P = 0.75`, the model chooses from words that together cover at least 75% probability.
-
-Top P adjusts dynamically based on the probability distribution.
+Top P selects words from the smallest group of options whose total probability reaches a defined threshold.
 
 Simple meaning:
 
-> Top P controls how wide or narrow the model’s word choices are based on probability.
+> Top P controls word selection based on cumulative probability instead of a fixed number of words.
+
+Example sentence:
+
+```text
+The garden was full of beautiful _____.
+```
+
+Assume the model predicts:
+
+| Word | Probability |
+|---|---|
+| flowers | 60% |
+| trees | 20% |
+| herbs | 10% |
+| insects | 5% |
+| books | 5% |
 
 ---
 
-## Quick Parameter Guide
+### Top P Example
 
-| Parameter | Purpose | Lower Value | Higher Value |
+If `Top P = 0.80`, the model selects from the smallest group of words that together reach at least 80% probability.
+
+Selected words:
+
+| Word | Probability |
+|---|---|
+| flowers | 60% |
+| trees | 20% |
+
+Total probability:
+
+```text
+60% + 20% = 80%
+```
+
+Possible outputs:
+
+```text
+The garden was full of beautiful flowers.
+```
+
+```text
+The garden was full of beautiful trees.
+```
+
+---
+
+### Higher Top P Example
+
+If `Top P = 0.90`, the model can select from words that together reach at least 90% probability.
+
+Selected words:
+
+| Word | Probability |
+|---|---|
+| flowers | 60% |
+| trees | 20% |
+| herbs | 10% |
+
+Total probability:
+
+```text
+60% + 20% + 10% = 90%
+```
+
+Possible outputs:
+
+```text
+The garden was full of beautiful flowers.
+```
+
+```text
+The garden was full of beautiful trees.
+```
+
+```text
+The garden was full of beautiful herbs.
+```
+
+This allows more variety than `Top P = 0.80`.
+
+---
+
+## Temperature vs Top K vs Top P
+
+| Parameter | What It Controls | Low Value | High Value |
 |---|---|---|---|
-| Temperature | Controls randomness | More predictable | More creative |
-| Top K | Limits number of likely word choices | More focused | More varied |
-| Top P | Uses probability threshold for word selection | More focused | More flexible |
+| Temperature | Randomness and creativity | More predictable and factual | More creative and varied |
+| Top K | Number of top word choices | Fewer word choices | More word choices |
+| Top P | Probability range for word choices | Smaller, safer word set | Larger, more flexible word set |
 
 ---
 
