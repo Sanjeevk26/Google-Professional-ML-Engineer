@@ -462,8 +462,3 @@ Why this prompt is useful:
 
 ---
 
-## Simple Summary
-
-Vertex AI Studio helps users create generative AI applications using Google foundation models like Gemini. It supports prompt design, prompt testing, multimodal inputs, app prototyping, and deployment.
-
-The most important concept is prompt engineering. A good prompt should clearly define the task, provide useful context, and include examples or structure when needed. This helps the AI model produce better, more accurate, and more useful responses.
