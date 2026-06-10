@@ -449,11 +449,3 @@ From there, the model can be:
 - Tuned models can be deployed through Vertex AI Model Registry.
 
 ---
-
-## Simple Summary
-
-Vertex AI Studio helps move generative AI prompts into real applications. Users can generate code, deploy apps, and integrate prompts using SDKs or APIs.
-
-After deployment, the application should be monitored and optimized. Grounding and RAG help keep model responses accurate and connected to trusted data. Model tuning improves model behavior for specific tasks by training it on labeled examples.
-
-For simple needs, prompt design may be enough. For more specialized tasks, parameter-efficient tuning or full fine-tuning can be used. Supervised fine-tuning is useful when there are clear input-output examples available for the model to learn from.
